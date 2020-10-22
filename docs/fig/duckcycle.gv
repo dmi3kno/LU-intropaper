@@ -1,0 +1,29 @@
+digraph amcycle {
+  
+  # graph statement
+  graph [fontsize=10, splines=spline]
+  # node statements
+  node[color="black",fontsize=10] 
+  BP [label="Breeding\nPopulation", shape=rectangle];
+  #HY [label='Hatched\nYoung', shape=rectangle];
+  SA [shape=record, label="{<rec> Recruits|<surv> Surviving\nAdults}"];
+  HY [label='Hatched\nYoung', shape=rectangle];
+
+  
+  node[shape=ellipse, style=filled, color=paleturquoise, fontsize=8]
+  H [label="Harvest"] 
+  CL [label="Crippling\nLoss"]
+  FM [label="Fall\nMortality"]
+  MY [label="Mortality\nof Young"]
+
+
+  SA -> H [style="dashed"]
+  SA -> CL [style="dashed"]
+  SA -> FM [style="dashed"]
+  SA -> HY [dir=back]
+  HY -> BP:e [dir=back]
+  BP:e -> SA:e [xlabel="Summer\nMortality",fontsize=8, style="dashed"];
+  SA:w -> BP:w [xlabel="Winter\nMortality", fontsize=8, style="dashed"]
+  HY -> MY [style="dashed"]
+
+}

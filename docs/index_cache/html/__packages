@@ -1,0 +1,16 @@
+base
+RefManageR
+xaringanthemer
+ggplot2
+ggforce
+DiagrammeR
+DiagrammeRsvg
+magrittr
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats

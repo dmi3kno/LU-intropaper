@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Environmental models in waterfowl management under uncertainty</title>
+    <meta charset="utf-8" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, inverse, left, middle
+
+background-image: url(fig/kisscc0-gaggle-of-geese.png)
+background-position: right bottom
+background-size: 600px
+
+&lt;style type="text/css"&gt;
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.large { 
+  font-size: 130%;
+  }
+.small { 
+  font-size: 70%;
+  }
+.tiny { 
+  font-size: 40%;
+  }
+
+&lt;/style&gt;
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(fig/lu-logo.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('a')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = 'https://www.cec.lu.se/'
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+
+
+#Environmental models in waterfowl management under uncertainty
+
+###Introductory paper seminar
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+**Dmytro Perepolkin**&lt;br&gt;
+
+PhD Student, UnEviL Group&lt;br&gt;
+Centre for Environmental and Climate Research&lt;br&gt;
+Lund University | 22 October 2020
+
+---
+class: inverse, center, middle
+
+# Environmental decisions
+
+---
+# What makes environmental decisions difficult?
+.pull-left[
+### Like earth science
+
+- Complexity, ambiguity
+
+- Exploitation and conservation
+
+### Unlike earth science
+
+- Dynamism, interconnectedness of systems
+
+- Ethics/values questions
+
+- Multiple actors (animals, agencies, authorities, hunters, citizens)
+]
+
+.pull-right[
+
+&lt;img src="fig/geology_models.png" width="400" /&gt;
+
+&lt;img src="fig/kisscc0-gaggle-of-geese.png" width="350" /&gt;
+
+]
+
+---
+# Waterfowl resources
+.pull-left[
+&lt;img src="fig/anseriformes.png" width="285" height="40%" /&gt;
+&lt;br&gt;&lt;br&gt;
+.small[*Image: [Waterfowl management blog](https://npc9.wordpress.com/2013/04/)*]
+]
+
+.pull-left[
+### Anseriformes, Family Anatidae
+- 146 species in 43 genera. Prized quarry for hunters &lt;a name=cite-kear2005DucksGeeseSwans&gt;&lt;/a&gt;([Kear and Hulme, 2005](#bib-kear2005DucksGeeseSwans))
+
+- Mostly unregulated hunting up until early XX century. Loss of habitat and overdepletion as a result
+
+- Hunting regulation and creation of wildlife refuges turned the trend around for most species
+
+- Today waterfowl management is arguably a hallmark of success in environmental resource management &lt;a name=cite-nichols1995ManagingNorthAmerican&gt;&lt;/a&gt;([Nichols, Johnson, and Williams, 1995](https://www.jstor.org/stable/2097204))
+]
+
+---
+class: inverse, center, middle
+
+# Risk and uncertainty
+
+---
+# Glossary
+
+&lt;a name=cite-knight1921RiskUncertaintyProfit&gt;&lt;/a&gt;[Knight (1921)](#bib-knight1921RiskUncertaintyProfit) proposed the following definitions of "risk" and "uncertainty":
+.pull-left[
+#### Risk
+- Outcome is not known, but the frequency distribution from which an outcome of interest is drawn ("source distribution") is well understood. It is possible to know how likely each outcome is to appear &lt;a name=cite-morgan1990UncertaintyGuideDealing&gt;&lt;/a&gt;([Morgan, Henrion, and Small, 1990](#bib-morgan1990UncertaintyGuideDealing))
+- It is, therefore, appropriate for the "plausibility reasoning robot" &lt;a name=cite-jaynes2003ProbabilityTheoryLogic&gt;&lt;/a&gt;([Jaynes, 2003](https://doi.org/10.1017/CBO9780511790423)) to characterize the uncertainty in a randomly picked (sampled) outcome by a probability distribution with the same parameters as the known frequency distribution.
+- Such uncertainty is called "aleatory", from Latin - *alea* - dice &lt;a name=cite-fox2011DistinguishingTwoDimensions&gt;&lt;/a&gt;([Fox and Ülkümen, 2011](#bib-fox2011DistinguishingTwoDimensions))
+- Can not be reduced, only "resolved".
+]
+
+--
+
+.pull-right[
+####Uncertainty
+- "Source distribution" is unknown
+- The lack-of-knowledge about such source frequency distribution is called "epistemic" uncertainty from Greek - *episteme* - knowledge.
+- Expressed with probability, indicating "degree of belief" &lt;a name=cite-ohagan2004DicingUnknown&gt;&lt;/a&gt;([O'Hagan, 2004](https://doi.org/10.1111/j.1740-9713.2004.00050.x)) or "plausibility" ([Jaynes, 2003](https://doi.org/10.1017/CBO9780511790423)). The probability is personal, but not arbitrary, because it is consistent with probability axioms and "plausibility reasoning desiderata" ([Morgan, Henrion, and Small, 1990](#bib-morgan1990UncertaintyGuideDealing); [Jaynes, 2003](https://doi.org/10.1017/CBO9780511790423))
+- Can be, in principle, reduced through exploration, experimentation and knowledge acquisition &lt;a name=cite-kleindorfer2010ReflectionsDecisionMaking&gt;&lt;/a&gt;([Kleindorfer, 2010](#bib-kleindorfer2010ReflectionsDecisionMaking))
+]
+
+---
+# Epistemic uncertainty
+
+- Bayesian Analysis
+    - reason about the “source distribution” based on samples. 
+    - infer parameters, while the "likelihood" is fixed, but the two are inseparable &lt;a name=cite-gelman2017PriorCanGenerally&gt;&lt;/a&gt;([Gelman, Simpson, and Betancourt, 2017](https://arxiv.org/abs/1708.07487))
+    - model uncertainty can, sometimes, be converted into parameter uncertainty ([Morgan, Henrion, and Small, 1990](#bib-morgan1990UncertaintyGuideDealing))
+
+--
+
+- Model uncertainty
+    - Not only about the choice of probability distribution, but also about the functional form or alternative theory, aka "structural uncertainty" &lt;a name=cite-bojke2009CharacterizingStructuralUncertainty&gt;&lt;/a&gt;([Bojke, Claxton, Sculpher, and Palmer, 2009](https://doi.org/10.1111/j.1524-4733.2008.00502.x))
+    - Can not assign probabilities, only weights reflecting relative plausibility &lt;a name=cite-cox2012ConfrontingDeepUncertainties&gt;&lt;/a&gt;([Cox, 2012](https://doi.org/10.1111/j.1539-6924.2012.01792.x))
+
+--
+
+- Ontological uncertainty
+   - Future changes in 
+       - beliefs(models), 
+       - values(objectives) and 
+       - available choices (alternatives) &lt;a name=cite-derbyshire2019AnswersQuestionsUncertainty&gt;&lt;/a&gt;([Derbyshire, 2019](https://doi.org/10.1177/0308518X19877885))
+   - Requires non-probabilistic scenario-based methods 
+
+---
+class: inverse, center, middle
+
+# Decision Analysis
+
+---
+# Epistemology in science
+.pull-left[ 
+###Rationalism
+
+- Can be traced back to XVII century philosophers, including Spinoza, Leibniz and Kant.
+
+- Descartes: deductive reconstruction of knowledge starting from *cogito, ergo sum*
+
+- Senses are untrustworthy, logical reasoning can provide unquestionable truth about the world. 
+
+- Tearing down the world to reconstruct it
+
+- Ultimate question: "Is it so?"
+]
+
+--
+.pull-right[
+###Pragmatism
+
+- Originated in late XIX century in the East Coast USA (Harvard, Johns Hopkins University)
+
+- Pierce and Dewey: Uncertainty is deliberation on "what to do", conditioned and directed by the goals and alternatives considered. These determine what is perceived as "relevant".
+
+- Otto Neurath: "Search for truth ~ repairing a ship in high seas". Limited realism.
+
+- Ultimate question: "Will it work"?
+
+]
+
+.footnotes[
+&lt;br&gt;&lt;br&gt;
+[1] &lt;a name=cite-kim2017PragmaticEncroachmentEpistemology&gt;&lt;/a&gt;&lt;a name=cite-norton2002PragmatistEpistemologyAdaptive&gt;&lt;/a&gt;[Kim (2017)](https://doi.org/10.1111/phc3.12415); [Norton (2002)](https://doi.org/10.1007/978-94-010-0301-8_14)
+]
+---
+# Decision analysis
+
+A discipline at the crossroads of statistics, normative decision science, behavioral psychology and organization theory. First proposed by Ronald A. Howard, supported by Howard Raiffa.  Most often associated with Operations Research.
+.pull-left[
+#### Main components
+- Subjectivist interpretation of probability (Bernoulli, Laplace)
+
+- Decision-theoretic view of probability and utility (Keynes, Ramsey, de Finetti, Savage)
+
+- Acknowledging and accounting for decision biases (Kahneman &amp; Tversky)
+
+- Prescriptive ("engineering") approach to decision structuring (Howard, Raiffa)
+]
+--
+.pull-right[
+#### Formal Decision Process
+
+- Formal approach to the "process of deciding"
+
+- **DQ**: West-coast school &lt;a name=cite-howard1977ReadingsDecisionAnalysis&gt;&lt;/a&gt;&lt;a name=cite-matheson2005DecisionAnalysisDecision&gt;&lt;/a&gt;([Howard, Matheson, and Miller, 1977](#bib-howard1977ReadingsDecisionAnalysis); [Matheson, 2005](https://doi.org/10.1287/educ.1053.0015))
+
+- **PrOACT**: East-coast school &lt;a name=cite-keeney1976DecisionsMultipleObjectives&gt;&lt;/a&gt;&lt;a name=cite-keeney1999SmartChoicesGuide&gt;&lt;/a&gt;([Keeney and Raiffa, 1976](#bib-keeney1976DecisionsMultipleObjectives); [Keeney, Hammond, and Raiffa, 1999](#bib-keeney1999SmartChoicesGuide)). 
+
+- In environmental management known as Structured Decision Making &lt;a name=cite-gregory2012StructuredDecisionMaking&gt;&lt;/a&gt;([Gregory, 2012](#bib-gregory2012StructuredDecisionMaking))
+]
+
+--
+
+#### “Modeling” approach to DA
+- Decision model as a product. “Extra-personal representation” of the problem.
+- The objective is not "the right answer", but the "clarity of action".
+
+---
+# Values in DA.
+
+.pull-left[
+- Weber, Kuhn: Value-free ideal = "epistemic values only" &lt;a name=cite-douglas2015ValuesScience&gt;&lt;/a&gt;([Douglas, 2015](https://doi.org/10.1093/oxfordhb/9780199368815.013.28))
+
+- Non-epistemic values allowed only in "external aspects" 
+
+![Values diagram](index_files/figure-html/dot-values-diagram-1.png)
+]
+--
+.pull-right[
+- Pragmatists: values are inseparable from scientific inquiry and need to be embraced and examined
+&lt;a name=cite-stuhr2003PragmatismValuesValuable&gt;&lt;/a&gt;([Stuhr, 2003](https://doi.org/10.1080/1350178032000071084))
+
+- Multi-Criteria Decision Analysis (MCDA): systematically eliciting inputs from various stakeholders, using models to combine them with the aim of ranking alternatives.
+
+- Criticism of decision analysis: assumes decision maker is aware of her own values (see non-bayesian decision theory &lt;a name=cite-peterson2008NonbayesianDecisionTheory&gt;&lt;/a&gt;([Peterson, 2008](https://doi.org/10.1007/978-1-4020-8699-1))). But the aim is not to provide "the right answer", but to usher the "clarity of action".
+
+- Difficulty to trade-off is not the same as difficulty to enumerate values.
+
+]
+
+--
+
+#### Question: Can Decision Analysis "objectify" discussion about values the way Bayesian Analysis "objectified" subjective probabilities?
+---
+class: inverse, center, middle
+
+# Models
+
+---
+# Modeling of the system
+.pull-left[
+Environmental systems are rich in multiple types of uncertainty &lt;a name=cite-williams1996UncertaintyAdaptiveManagement&gt;&lt;/a&gt;([Williams, Johnson, and Wilkins, 1996](https://www.jstor.org/stable/3802220)):
+- **natural variation**: stochastisity 
+
+- **limited observability**: monitoring
+
+- **limited controllability**: implementation
+
+- **structural uncertainty**: incomplete understanding
+
+Level of detail in the model:
+
+- "reductionist" approach of modeling transferable universal phenomena &lt;a name=cite-schuwirth2019HowMakeEcological&gt;&lt;/a&gt;([Schuwirth, Borgwardt, Domisch, Friedrichs, Kattwinkel, Kneis, Kuemmerlen, Langhans, Martínez-López, and Vermeiren, 2019](https://doi.org/10.1016/j.ecolmodel.2019.108784)) to minimize number of parameters
+
+- pragmatic decision-focused approach &lt;a name=cite-howard2007FoundationsDecisionAnalysis&gt;&lt;/a&gt;([Howard, 2007](https://doi.org/10.1017/CBO9780511611308.004)). Only details material to decision should be included.
+]
+
+.pull-right[
+
+Traditional (black) and emerging (blue) approaches to modeling
+
+![](index_files/figure-html/modelsplot-1.png)&lt;!-- --&gt;
+
+Figure adopted and modified from [Schuwirth, Borgwardt, Domisch, et al. (2019)](https://doi.org/10.1016/j.ecolmodel.2019.108784)
+]
+---
+# Modeling of decision making
+
+Most decisions in environmental management are recurring. Markov Decision Process (MDP) is mathematical model for sequential decision making in stochastic environments &lt;a name=cite-puterman1994MarkovDecisionProcesses&gt;&lt;/a&gt;([Puterman, 1994](https://doi.org/10.1002/9780470316887)).
+
+#### Basic idea:
+
+- agent is placed within stochastic environment, which changes in response to his actions
+    
+- the state of the environment affect agent's rewards and the future states the environment can transition into
+
+#### Objective:
+
+- select a sequence of actions that will maximize long-term reward
+
+- embedded trade-off: receive utility now or improve chances of obtaining utility in the future 
+
+#### Variations:
+
+- with regards to uncertainty: known parameters vs. MDP under uncertainty
+
+- based on process observability: fully observable vs. partially observable MDP (POMDP)
+
+---
+class: inverse, center, middle
+
+# Adaptive Management
+
+---
+# Do &amp;rarr; Learn &amp;rarr; Do 
+
+.left-column[
+###Active AM
+]
+.right-column[
+- Most important is learning &lt;a name=cite-rist2013AdaptiveManagementWhere&gt;&lt;/a&gt;([Rist, Campbell, and Frost, 2013](https://doi.org/10.1017/S0376892912000240))
+
+- Explicit accounting for uncertainty 
+
+- Main purpose of interventions is to reduce uncertainty &lt;a name=cite-williams2011PassiveActiveAdaptive&gt;&lt;/a&gt;([Williams, 2011](https://doi.org/10.1016/j.jenvman.2010.10.039))
+
+- AM program is a good as experimental design underlying it &lt;a name=cite-gregory2006DeconstructingAdaptiveManagement&gt;&lt;/a&gt;([Gregory, Ohlson, and Arvai, 2006](https://doi.org/10.1890/1051-0761(2006)016[2411:DAMCFA]2.0.CO;2))
+
+- Employs multiple experimental models, targeting individual unknowns and a single management model
+
+- Able to learn fast
+
+- 💰💰💰
+]
+
+---
+# Do &amp;rarr; Learn &amp;rarr; Do 
+
+.left-column[
+###Active AM
+###Passive AM
+]
+.right-column[
+- Learning is only a byproduct of the objective-based management: anticipated, but interventions are not specifically targeting it
+
+- Using one "most appropriate" model &lt;a name=cite-martin2009StructuredDecisionMaking&gt;&lt;/a&gt;([Martin, Runge, Nichols, Lubow, and Kendall, 2009](https://doi.org/10.1890/08-0255.1)) or model averaging &lt;a name=cite-williams2002AnalysisManagementAnimal&gt;&lt;/a&gt;([Nichols, Johnson, and Williams, 1995](https://www.jstor.org/stable/2097204); [Williams, Nichols, and Conroy, 2002](#bib-williams2002AnalysisManagementAnimal)).
+
+- Model weights are arrived at using judgment from previous iterations (better fit to future data).
+
+- Learning is slower; Crucial to have diverse models targeting varied hypotheses
+
+- Frugal on budget
+]
+
+---
+# Do &amp;rarr; Learn &amp;rarr; Do 
+
+.left-column[
+###Active AM
+###Passive AM
+###Steady state
+]
+.right-column[
+- "Passive-aggressive"?
+
+- Do nothing, wait-and-see, maintain status-quo  ![](fig/OstrichHeadInSand2.svg)
+
+
+&lt;br&gt;&lt;br&gt;
+
+[Rist, Campbell, and Frost (2013)](https://doi.org/10.1017/S0376892912000240) literature review:
+
+- AM is misunderstood and misinterpreted
+
+- Often AM is confused for "trial and error" approach.
+
+- Far from original meaning in &lt;a name=cite-holling1978AdaptiveEnvironmentalAssessment&gt;&lt;/a&gt;[Holling and Programme (1978)](#bib-holling1978AdaptiveEnvironmentalAssessment): "proactive experimentation as a method of learning".
+
+]
+ 
+---
+# AM schools of thought
+
+Literature on adaptive management tends to be concentrated around two main camps &lt;a name=cite-mcfadden2011EvaluatingEfficacyAdaptive&gt;&lt;/a&gt;([McFadden, Hiller, and Tyre, 2011](https://doi.org/10.1016/j.jenvman.2010.10.038))
+.pull-left[
+![](index_files/figure-html/amplot-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+#### RE school
+- originates from work of &lt;a name=cite-gunderson2010BarriersBridgesRenewal&gt;&lt;/a&gt;[Gunderson, Light, Holling, and Recorded Books (2010)](http://rbdigital.oneclickdigital.com)
+- Complex environmental models aiming to capture every detail
+
+#### DT school
+- focuses on defining the problem, clarifying objectives and developing management alternatives prior to building process models &lt;a name=cite-johnson1999ProtocolPracticeAdaptive&gt;&lt;/a&gt;([Johnson and Williams, 1999](https://doi.org/10.5751/ES-00091-030108)). 
+- less complex models, focused on decision problem at hand
+- adopted by US Dept of Interior for North American Waterfowl Management Plan ([Nichols, Johnson, and Williams, 1995](https://www.jstor.org/stable/2097204))
+]
+
+---
+# Adaptive Management and VOI
+
+- Value of Information (VOI) is "potential management value that is foregone under uncertainty" &lt;a name=cite-williams2011AdaptiveResourceManagement&gt;&lt;/a&gt;([Williams, Eaton, and Breininger, 2011](https://doi.org/10.1016/j.ecolmodel.2011.07.003)). Without the information *a different management action* is
+preferred. If the the wrong action is taken, the expected performance will be lower and therefore, decision maker will suffer an “opportunity loss” &lt;a name=cite-raiffa1970DecisionAnalysisIntroductory&gt;&lt;/a&gt;([Raiffa, 1970](#bib-raiffa1970DecisionAnalysisIntroductory)). 
+
+- In its simplest form VOI is a difference between value with and without the information. Difference in value originates from changed course of action.
+
+- Can guide allocation of resources towards areas with the highest impact on the choice of management actions &lt;a name=cite-runge2011WhichUncertaintyUsing&gt;&lt;/a&gt;([Runge, Converse, and Lyons, 2011](https://doi.org/10.1016/j.biocon.2010.12.020))
+
+- Gradual adaptation balances *learning* and *management* &lt;a name=cite-moore2017TwostepAdaptiveManagement&gt;&lt;/a&gt;([Moore, Walker, Runge, McDonald‐Madden, and McCarthy, 2017](https://doi.org/10.1002/eap.1515)) ("dual-control problem")
+
+- Results of the VOI analysis are conditional upon the context of the decision
+(decision frame), choice of the value metric (objectives), and the set of management actions it considers. Other factors affecting the result are choice (and structure) of model and specific parametrization 
+
+Classic DA books discuss VOPI (Value of Perfect Information), which forms "upper limit" for VOI. In practice information is always imperfect, so Expected Value of Partial Information &lt;a name=cite-williams2015ValueInformationNatural&gt;&lt;/a&gt;([Williams and Johnson, 2015](https://doi.org/10.1002/ece3.1363)) and Expected Value of Sample Information ([Runge, Converse, and Lyons, 2011](https://doi.org/10.1016/j.biocon.2010.12.020)) is used.
+
+---
+class: inverse, center, middle
+
+# Waterfowl Management
+---
+# Management Objectives and Responses
+
+There are many objectives and alternatives mentioned in the waterfowl management literature. Systematic research of both is, however, lacking. &lt;a name=cite-fox2017AgricultureHerbivorousWaterfowl&gt;&lt;/a&gt;&lt;a name=cite-stroud2017KeyActionsSustainable&gt;&lt;/a&gt;&lt;a name=cite-bradbeer2017CrowdedSkiesConflicts&gt;&lt;/a&gt;&lt;a name=cite-fox2019UrbanGeeseLooking&gt;&lt;/a&gt;([Fox, Elmberg, Tombre, and Hessel, 2017](https://doi.org/10.1111/brv.12258); [Stroud, Madsen, and Fox, 2017](https://doi.org/10.1007/s13280-017-0903-0); [Bradbeer, Rosenquist, Christensen, and Fox, 2017](https://doi.org/10.1007/s13280-017-0901-2); [Fox, 2019](https://wildfowl.wwt.org.uk/index.php/wildfowl/article/view/2688)). 
+.pull-left[
+#### Management objectives
+- Stable and sustainable population size(+)
+- Threat to public health and safety(-)
+- Cultural/recreational value for birdwatchers and tourists
+- Conservation activism
+- Tundra degradation in breeding range(-)
+- Conflict with agriculture(-)
+- Hunter recreation opportunities (+)
+- Long-term aggregated harvest(+)
+- Annual hunting season length(+)
+- Frequency of changes in regulation(-)
+- Risk to air traffic safety (-)
+- International treaties compliance(+)
+]
+
+.pull-left[
+#### Management alternatives
+- Harvest
+- Disturbances and deterrents
+- Provision of sacrificial feeding areas
+- Compensation to farmers
+- Coordination of attractive fields for refuge
+- Stakeholder engagement and co-management
+]
+
+---
+# Waterfowl management worldwide
+
+## USA
+- North American Waterfowl Management Plan is a hallmark of success. 
+- Population monitoring programs, flyway-scale wildlife research and management working groups 
+- State-of-the-art population models and advising harvest regulation across the continent
+
+--
+
+## Europe
+- African-Eurasian Waterbird Agreement (AEWA) drafted in 1999 is today ratified by 80 countries. Backed up by EU Bird Directive (2009/147/EC).
+- European Goose Management Platform (2016) initiated species-focused working groups for developing ISMP (International Species Management Plans) for *pink-footed goose* and *taiga bean goose* (with *barnacle goose* and *greylag goose*) in the working.
+- Experience transfer from North America with Fred A. Johnson (US. Geological Survey) advising the EGM IWG.
+---
+# Decisions in waterfowl management
+
+&lt;img src="index_files/figure-html/dot-wm-decisions-diagram-1.png" style="display: block; margin: auto;" /&gt;
+---
+# Harvest
+
+.pull-left[
+3 steps taken on annual basis &lt;a name=cite-johnson2000AdaptiveRegulationWaterfowl&gt;&lt;/a&gt;([Johnson and Case, 2000](https://digitalcommons.unl.edu/usfwspubs/347)):
+
+1. Identify optimal regulatory action, based on the knowledge about the state of the system (e.g. population characteristics) and the weights of the alternative models
+2. Given the optimal regulatory action, determine model-specific projections of population size
+3. When next year's monitoring data is available, adjust model weights according to individual model's ability to predict the change in population
+
+[1] ([Williams, Johnson, and Wilkins, 1996](https://www.jstor.org/stable/3802220))
+]
+
+.pull-right[
+
+<div id="htmlwidget-2ff805d5d8c65db62017" style="width:400px;height:500px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2ff805d5d8c65db62017">{"x":{"diagram":"digraph amcycle {\n  \n  # graph statement\n  graph [fontsize=10, splines=spline]\n  # node statements\n  node[color=\"black\",fontsize=10] \n  BP [label=\"Breeding\\nPopulation\", shape=rectangle];\n  #HY [label=\"Hatched\\nYoung\", shape=rectangle];\n  SA [shape=record, label=\"{<rec> Recruits|<surv> Surviving\\nAdults}\"];\n  HY [label=\"Hatched\\nYoung\", shape=rectangle];\n\n  \n  node[shape=ellipse, style=filled, color=paleturquoise, fontsize=8]\n  H [label=\"Harvest\"] \n  CL [label=\"Crippling\\nLoss\"]\n  FM [label=\"Fall\\nMortality\"]\n  MY [label=\"Mortality\\nof Young\"]\n\n\n  SA -> H [style=\"dashed\"]\n  SA -> CL [style=\"dashed\"]\n  SA -> FM [style=\"dashed\"]\n  SA -> HY [dir=back]\n  HY -> BP:e [dir=back]\n  BP:e -> SA:e [xlabel=\"Summer\\nMortality\",fontsize=8, style=\"dashed\"];\n  SA:w -> BP:w [xlabel=\"Winter\\nMortality\", fontsize=8, style=\"dashed\"]\n  HY -> MY [style=\"dashed\"]\n\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+]
+---
+# Habitats
+
+Improvement of habitats is one of the key objectives of EU Bird Directive &lt;a name=cite-europeanparliament2010Directive2009147&gt;&lt;/a&gt;([European Parliament and Council of the European Union, 2010](http://data.europa.eu/eli/dir/2009/147/oj)). Explicit (mechanistic) models can fit the data more accurately and provide prediction outside of training range &lt;a name=cite-baveco2017CombiningModellingTools&gt;&lt;/a&gt;([Nichols, Johnson, and Williams, 1995](https://www.jstor.org/stable/2097204); [Baveco, Bergjord, Bjerke, Chudzińska, Pellissier, Simonsen, Madsen, Tombre, and Nolet, 2017](https://doi.org/10.1007/s13280-017-0899-5)). 
+
+.pull-left[
+#### ABM
+- Traditionally addressed with Ordinary Differential Equations
+
+- Lowered cost and accessibility of computation made agent-based models (ABMs) feasible
+
+- ABMs are simulation tools for studying populations &lt;a name=cite-grimm2005IndividualbasedModelingEcology&gt;&lt;/a&gt;([Grimm and Railsback, 2005](#bib-grimm2005IndividualbasedModelingEcology))
+
+- Explicit accounting for interaction between agents and their environments 
+
+]
+.pull-right[
+#### Specialized ABMs for waterfowl management
+- Pettifor et al. model: barnacle goose and the dark-bellied brent goose &lt;a name=cite-pettifor2000SpatiallyExplicitIndividualbased&gt;&lt;/a&gt;([Pettifor, Caldow, Rowcliffe, Goss‐Custard, Black, Hodder, Houston, Lang, and Webb, 2000](https://doi.org/10.1046/j.1365-2664.2000.00536.x))
+- AlmaSS model. Animal, Landscape, and Man Simulation System (ALMaSS) used to support AEWA goose project &lt;a name=cite-williams2018WhereGoGoose&gt;&lt;/a&gt;([Williams, Topping, Dalby, Clausen, and Madsen, 2018](https://doi.org/10.1080/10871209.2018.1509249))
+- SWAMP model. Waterfowl foraging on wintering grounds in North America &lt;a name=cite-miller2014SWAMPAgentbasedModel&gt;&lt;/a&gt;([Miller, Ringelman, Schank, and Eadie, 2014](https://doi.org/10.1177/0037549713511864))
+- MORPH model. Predicting effect of environmental change on foraging populations &lt;a name=cite-stillman2008MORPHIndividualbasedModel&gt;&lt;/a&gt;([Stillman, 2008](https://doi.org/10.1016/j.ecolmodel.2008.04.014))
+
+]
+---
+# Human dimensions
+
+Waterfowl management policy should to be considered in the integrated social-ecological context,
+incorporating stakeholder objectives and incentives &lt;a name=cite-madsen2015GuidelinesSustainableHarvest&gt;&lt;/a&gt;&lt;a name=cite-johnson2015TrainingConservationPractitioners&gt;&lt;/a&gt;([Madsen, Bunnefeld, Nagy, Griffin, du
+Rau, Mondain-Monval, Hearn, Grauer, Merkel, Williams, and others, 2015](#bib-madsen2015GuidelinesSustainableHarvest); [Johnson, Eaton, Williams, Jensen, and Madsen, 2015](https://doi.org/10.3390/su7078354)).
+
+- Perspectives of different stakeholder might vary (citizens vs hunters vs authorities vs farmers). Within human-nature conflict there's usually human-human conflict embedded.
+
+- Difficulties of governing. Change of management objectives at the pressure of stakeholders. Case of mid-Norway geese management &lt;a name=cite-eythorsson2017GooseManagementSchemes&gt;&lt;/a&gt;([Eythórsson, Tombre, and Madsen, 2017](https://doi.org/10.1007/s13280-016-0884-4))
+
+- Need for multi-agent, multi-objective (behavioral) coupled simulation &lt;a name=cite-liu2007ComplexityCoupledHuman&gt;&lt;/a&gt;([Liu, Dietz, Carpenter, Alberti, Folke, Moran, Pell, Deadman, Kratz, Lubchenco, Ostrom, Ouyang, Provencher, Redman, Schneider, and Taylor, 2007](https://doi.org/10.1126/science.1144004))
+
+#### Question: Should scientists model stakeholder objectives explicitly given that they affect success of management actions implementation?
+
+---
+class: inverse, center, middle
+
+# Conclusions
+---
+# Key takeaways
+
+.pull-left[
+- Environmental decisions require structured approach. 
+
+- Decision Analysis offers prescriptive approach to improving decision making. Principles, process and methods embracing uncertainty, objectives and decision alternatives.
+
+- MCDA-based Adaptive Management approach for iterative decision making is successfully adopted in waterfowl management in North America and in Europe.
+
+- Model-based decision analysis utilizes various statistical and simulation models for modeling of systems, environments and agents aiming to provide clarity of action for decision makers.
+]
+
+.pull-right[
+![](fig/kisscc0-gaggle-of-geese.png)
+]
+
+
+
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-baveco2017CombiningModellingTools&gt;&lt;/a&gt;[Baveco, J. M, A.
+Bergjord, J. W. Bjerke, et
+al.](#cite-baveco2017CombiningModellingTools) (2017). "Combining
+Modelling Tools to Evaluate a Goose Management Scheme". In: _Ambio_
+46.S2, pp. 210-223. ISSN: 0044-7447, 1654-7209. DOI:
+[10.1007/s13280-017-0899-5](https://doi.org/10.1007%2Fs13280-017-0899-5).
+
+&lt;a name=bib-bojke2009CharacterizingStructuralUncertainty&gt;&lt;/a&gt;[Bojke, L,
+K. Claxton, M. Sculpher, et
+al.](#cite-bojke2009CharacterizingStructuralUncertainty) (2009).
+"Characterizing Structural Uncertainty in Decision Analytic Models: A
+Review and Application of Methods". In: _Value in Health_ 12.5, pp.
+739-749. ISSN: 10983015. DOI:
+[10.1111/j.1524-4733.2008.00502.x](https://doi.org/10.1111%2Fj.1524-4733.2008.00502.x).
+
+&lt;a name=bib-bradbeer2017CrowdedSkiesConflicts&gt;&lt;/a&gt;[Bradbeer, D. R, C.
+Rosenquist, T. K. Christensen, et
+al.](#cite-bradbeer2017CrowdedSkiesConflicts) (2017). "Crowded Skies:
+Conflicts between Expanding Goose Populations and Aviation Safety". In:
+_Ambio_ 46.S2, pp. 290-300. ISSN: 0044-7447, 1654-7209. DOI:
+[10.1007/s13280-017-0901-2](https://doi.org/10.1007%2Fs13280-017-0901-2).
+
+&lt;a name=bib-cox2012ConfrontingDeepUncertainties&gt;&lt;/a&gt;[Cox, L. A.
+T.](#cite-cox2012ConfrontingDeepUncertainties) (2012). "Confronting
+Deep Uncertainties in Risk Analysis". In: _Risk Analysis_ 32.10, pp.
+1607-1629. ISSN: 02724332. DOI:
+[10.1111/j.1539-6924.2012.01792.x](https://doi.org/10.1111%2Fj.1539-6924.2012.01792.x).
+
+&lt;a name=bib-derbyshire2019AnswersQuestionsUncertainty&gt;&lt;/a&gt;[Derbyshire,
+J.](#cite-derbyshire2019AnswersQuestionsUncertainty) (2019). "Answers
+to Questions on Uncertainty in Geography: Old Lessons and New Scenario
+Tools". In: _Environment and Planning A: Economy and Space_, p.
+0308518X1987788. ISSN: 0308-518X, 1472-3409. DOI:
+[10.1177/0308518X19877885](https://doi.org/10.1177%2F0308518X19877885).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-douglas2015ValuesScience&gt;&lt;/a&gt;[Douglas,
+H.](#cite-douglas2015ValuesScience) (2015). _Values in Science_. Ed. by
+P. Humphreys. Oxford University Press. DOI:
+[10.1093/oxfordhb/9780199368815.013.28](https://doi.org/10.1093%2Foxfordhb%2F9780199368815.013.28).
+
+&lt;a name=bib-europeanparliament2010Directive2009147&gt;&lt;/a&gt;[European
+Parliament and Council of the European
+Union](#cite-europeanparliament2010Directive2009147) (2010). "Directive
+2009/147/EC on the Conservation of Wild Birds". In: _Official Journal
+of the European Union_. Legislation, pp. 7-25. URL:
+[http://data.europa.eu/eli/dir/2009/147/oj](http://data.europa.eu/eli/dir/2009/147/oj)
+(visited on Jun. 26, 2020).
+
+&lt;a name=bib-eythorsson2017GooseManagementSchemes&gt;&lt;/a&gt;[Eythórsson, E, I.
+M. Tombre, and J. Madsen](#cite-eythorsson2017GooseManagementSchemes)
+(2017). "Goose Management Schemes to Resolve Conflicts with
+Agriculture: Theory, Practice and Effects". In: _Ambio_ 46.S2, pp.
+231-240. ISSN: 0044-7447, 1654-7209. DOI:
+[10.1007/s13280-016-0884-4](https://doi.org/10.1007%2Fs13280-016-0884-4).
+
+&lt;a name=bib-fox2019UrbanGeeseLooking&gt;&lt;/a&gt;[Fox, A.
+D.](#cite-fox2019UrbanGeeseLooking) (2019). "Urban Geese – Looking to
+North America for Experiences to Guide Management in Europe?" In:
+_Wildfowl_ 69.69, pp. 3-27-27. ISSN: 2052-6458. URL:
+[https://wildfowl.wwt.org.uk/index.php/wildfowl/article/view/2688](https://wildfowl.wwt.org.uk/index.php/wildfowl/article/view/2688)
+(visited on Jan. 22, 2020).
+
+&lt;a name=bib-fox2017AgricultureHerbivorousWaterfowl&gt;&lt;/a&gt;[Fox, A. D, J.
+Elmberg, I. M. Tombre, et
+al.](#cite-fox2017AgricultureHerbivorousWaterfowl) (2017). "Agriculture
+and Herbivorous Waterfowl: A Review of the Scientific Basis for
+Improved Management". In: _Biological Reviews_ 92.2, pp. 854-877. ISSN:
+1469-185X. DOI:
+[10.1111/brv.12258](https://doi.org/10.1111%2Fbrv.12258).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-fox2011DistinguishingTwoDimensions&gt;&lt;/a&gt;[Fox, C. R. and G.
+Ülkümen](#cite-fox2011DistinguishingTwoDimensions) (2011).
+"Distinguishing Two Dimensions of Uncertainty". In: _Perspectives on
+thinking, judging, and decision making_, pp. 21-35.
+
+&lt;a name=bib-gelman2017PriorCanGenerally&gt;&lt;/a&gt;[Gelman, A, D. Simpson, and
+M. Betancourt](#cite-gelman2017PriorCanGenerally) (2017). "The Prior
+Can Generally Only Be Understood in the Context of the Likelihood". In:
+_Entropy_ 19.10, p. 555. ISSN: 1099-4300. DOI:
+[10.3390/e19100555](https://doi.org/10.3390%2Fe19100555). arXiv:
+[1708.07487](https://arxiv.org/abs/1708.07487).
+
+&lt;a name=bib-gregory2012StructuredDecisionMaking&gt;&lt;/a&gt;[Gregory, R,
+ed.](#cite-gregory2012StructuredDecisionMaking) (2012). _Structured
+Decision Making: A Practical Guide to Environmental Management
+Choices_. Chichester, West Sussex ; Hoboken, N.J: Wiley-Blackwell. 299
+pp. ISBN: 978-1-4443-3341-1 978-1-4443-3342-8.
+
+&lt;a name=bib-gregory2006DeconstructingAdaptiveManagement&gt;&lt;/a&gt;[Gregory,
+R, D. Ohlson, and J.
+Arvai](#cite-gregory2006DeconstructingAdaptiveManagement) (2006).
+"Deconstructing Adaptive Management: Criteria for Applications to
+Environmental Management". In: _Ecological Applications_ 16.6, pp.
+2411-2425. ISSN: 1051-0761. DOI:
+[10.1890/1051-0761(2006)016[2411:DAMCFA]2.0.CO;2](https://doi.org/10.1890%2F1051-0761%282006%29016%5B2411%3ADAMCFA%5D2.0.CO%3B2).
+
+&lt;a name=bib-grimm2005IndividualbasedModelingEcology&gt;&lt;/a&gt;[Grimm, V. and
+S. F. Railsback](#cite-grimm2005IndividualbasedModelingEcology) (2005).
+_Individual-Based Modeling and Ecology_. Vol. 8. Princeton university
+press.
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-gunderson2010BarriersBridgesRenewal&gt;&lt;/a&gt;[Gunderson, L. H,
+S. S. Light, C. S. Holling, et
+al.](#cite-gunderson2010BarriersBridgesRenewal) (2010). _Barriers And
+Bridges To The Renewal Of Regional Ecosystems_. New York: Columbia
+University Press. ISBN: 978-0-231-51598-6. URL:
+[http://rbdigital.oneclickdigital.com](http://rbdigital.oneclickdigital.com)
+(visited on May. 17, 2020).
+
+&lt;a name=bib-holling1978AdaptiveEnvironmentalAssessment&gt;&lt;/a&gt;[Holling, C.
+S. and U. N. E. Programme,
+ed.](#cite-holling1978AdaptiveEnvironmentalAssessment) (1978).
+_Adaptive Environmental Assessment and Management_. International
+Series on Applied Systems Analysis 3. [Laxenburg, Austria] : Chichester
+; New York: International Institute for Applied Systems Analysis ;
+Wiley. 377 pp. ISBN: 978-0-471-99632-3.
+
+&lt;a name=bib-howard2007FoundationsDecisionAnalysis&gt;&lt;/a&gt;[Howard, R.
+A.](#cite-howard2007FoundationsDecisionAnalysis) (2007). "The
+Foundations of Decision Analysis Revisited". In: _Advances in Decision
+Analysis: From Foundations to Applications_. Ed. by D. von Winterfeldt,
+R. F. Miles Jr. and W. Edwards. Cambridge: Cambridge University Press,
+pp. 32-56. ISBN: 978-0-521-86368-1. DOI:
+[10.1017/CBO9780511611308.004](https://doi.org/10.1017%2FCBO9780511611308.004).
+
+&lt;a name=bib-howard1977ReadingsDecisionAnalysis&gt;&lt;/a&gt;[Howard, R. A, J. E.
+Matheson, and K. L. Miller](#cite-howard1977ReadingsDecisionAnalysis)
+(1977). _Readings in Decision Analysis_. Decision Analysis Group,
+Stanford Research Institute.
+
+&lt;a name=bib-jaynes2003ProbabilityTheoryLogic&gt;&lt;/a&gt;[Jaynes, E.
+T.](#cite-jaynes2003ProbabilityTheoryLogic) (2003). _Probability
+Theory: The Logic of Science_. Ed. by G. L. Bretthorst. 1st ed.
+Cambridge University Press. ISBN: 978-0-521-59271-0 978-0-511-79042-3.
+DOI:
+[10.1017/CBO9780511790423](https://doi.org/10.1017%2FCBO9780511790423).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-johnson2015TrainingConservationPractitioners&gt;&lt;/a&gt;[Johnson,
+F. A, M. J. Eaton, J. H. Williams, et
+al.](#cite-johnson2015TrainingConservationPractitioners) (2015).
+"Training Conservation Practitioners to Be Better Decision Makers". In:
+_Sustainability_ 7.7, pp. 8354-8373. DOI:
+[10.3390/su7078354](https://doi.org/10.3390%2Fsu7078354).
+
+&lt;a name=bib-johnson2000AdaptiveRegulationWaterfowl&gt;&lt;/a&gt;[Johnson, F. and
+D. Case](#cite-johnson2000AdaptiveRegulationWaterfowl) (2000).
+"Adaptive Regulation of Waterfowl Harvests: Lessons Learned and
+Prospects for the Future". In: _US Fish &amp; Wildlife Publications_. URL:
+[https://digitalcommons.unl.edu/usfwspubs/347](https://digitalcommons.unl.edu/usfwspubs/347).
+
+&lt;a name=bib-johnson1999ProtocolPracticeAdaptive&gt;&lt;/a&gt;[Johnson, F. and K.
+Williams](#cite-johnson1999ProtocolPracticeAdaptive) (1999). "Protocol
+and Practice in the Adaptive Management of Waterfowl Harvests". In:
+_Conservation Ecology_ 3.1. ISSN: 1195-5449. DOI:
+[10.5751/ES-00091-030108](https://doi.org/10.5751%2FES-00091-030108).
+
+&lt;a name=bib-kear2005DucksGeeseSwans&gt;&lt;/a&gt;[Kear, J. and M.
+Hulme](#cite-kear2005DucksGeeseSwans) (2005). _Ducks, Geese and Swans.
+Vol. 1, General Chapters. Special Accounts (Anhima to Salvadorina)_.
+Oxford University Press.
+
+&lt;a name=bib-keeney1976DecisionsMultipleObjectives&gt;&lt;/a&gt;[Keeney, R. L.
+and H. Raiffa](#cite-keeney1976DecisionsMultipleObjectives) (1976).
+_Decisions with Multiple Objectives: Preferences and Value Tradeoffs_.
+Wiley Series in Probability and Mathematical Statistics. New York:
+Wiley. 569 pp. ISBN: 978-0-471-46510-2.
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-keeney1999SmartChoicesGuide&gt;&lt;/a&gt;[Keeney, R, J. Hammond, and
+H. Raiffa](#cite-keeney1999SmartChoicesGuide) (1999). "Smart Choices: A
+Guide to Making Better Decisions".
+
+&lt;a name=bib-kim2017PragmaticEncroachmentEpistemology&gt;&lt;/a&gt;[Kim,
+B.](#cite-kim2017PragmaticEncroachmentEpistemology) (2017). "Pragmatic
+Encroachment in Epistemology". In: _Philosophy Compass_ 12.5, p.
+e12415. ISSN: 1747-9991. DOI:
+[10.1111/phc3.12415](https://doi.org/10.1111%2Fphc3.12415).
+
+&lt;a name=bib-kleindorfer2010ReflectionsDecisionMaking&gt;&lt;/a&gt;[Kleindorfer,
+P. R.](#cite-kleindorfer2010ReflectionsDecisionMaking) (2010).
+"Reflections on Decision Making under Uncertainty". In: _The Known, the
+Unknown, and the Unknowable in Financial Risk Management: Measurement
+and Theory Advancing Practice_, pp. 164-193.
+
+&lt;a name=bib-knight1921RiskUncertaintyProfit&gt;&lt;/a&gt;[Knight, F.
+H.](#cite-knight1921RiskUncertaintyProfit) (1921). _Risk, Uncertainty
+and Profit_. Vol. 31. Houghton Mifflin.
+
+&lt;a name=bib-liu2007ComplexityCoupledHuman&gt;&lt;/a&gt;[Liu, J, T. Dietz, S. R.
+Carpenter, et al.](#cite-liu2007ComplexityCoupledHuman) (2007).
+"Complexity of Coupled Human and Natural Systems". In: _Science_
+317.5844, pp. 1513-1516. ISSN: 0036-8075, 1095-9203. DOI:
+[10.1126/science.1144004](https://doi.org/10.1126%2Fscience.1144004).
+pmid: pmid.
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-madsen2015GuidelinesSustainableHarvest&gt;&lt;/a&gt;[Madsen, J, N.
+Bunnefeld, S. Nagy, et
+al.](#cite-madsen2015GuidelinesSustainableHarvest) (2015). "Guidelines
+on Sustainable Harvest of Migratory Waterbirds. AEWA Conservation
+Guidelines No. 5".
+
+&lt;a name=bib-martin2009StructuredDecisionMaking&gt;&lt;/a&gt;[Martin, J, M. C.
+Runge, J. D. Nichols, et al.](#cite-martin2009StructuredDecisionMaking)
+(2009). "Structured Decision Making as a Conceptual Framework to
+Identify Thresholds for Conservation and Management". In: _Ecological
+Applications_ 19.5, pp. 1079-1090. ISSN: 1939-5582. DOI:
+[10.1890/08-0255.1](https://doi.org/10.1890%2F08-0255.1).
+
+&lt;a name=bib-matheson2005DecisionAnalysisDecision&gt;&lt;/a&gt;[Matheson, J.
+E.](#cite-matheson2005DecisionAnalysisDecision) (2005). "Decision
+Analysis = Decision Engineering". In: _Emerging Theory, Methods, and
+Applications_. Vol. 0. 0 vols. INFORMS TutORials in Operations
+Research. INFORMS, pp. 195-212. ISBN: 978-1-877640-21-6. DOI:
+[10.1287/educ.1053.0015](https://doi.org/10.1287%2Feduc.1053.0015).
+
+&lt;a name=bib-mcfadden2011EvaluatingEfficacyAdaptive&gt;&lt;/a&gt;[McFadden, J. E,
+T. L. Hiller, and A. J.
+Tyre](#cite-mcfadden2011EvaluatingEfficacyAdaptive) (2011). "Evaluating
+the Efficacy of Adaptive Management Approaches: Is There a Formula for
+Success?" In: _Journal of Environmental Management_. Adaptive
+Management for Natural Resources 92.5, pp. 1354-1359. ISSN: 0301-4797.
+DOI:
+[10.1016/j.jenvman.2010.10.038](https://doi.org/10.1016%2Fj.jenvman.2010.10.038).
+
+&lt;a name=bib-miller2014SWAMPAgentbasedModel&gt;&lt;/a&gt;[Miller, M. L, K. M.
+Ringelman, J. C. Schank, et al.](#cite-miller2014SWAMPAgentbasedModel)
+(2014). "SWAMP: An Agent-Based Model for Wetland and Waterfowl
+Conservation Management". In: _SIMULATION_ 90.1, pp. 52-68. ISSN:
+0037-5497. DOI:
+[10.1177/0037549713511864](https://doi.org/10.1177%2F0037549713511864).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-moore2017TwostepAdaptiveManagement&gt;&lt;/a&gt;[Moore, A. L, L.
+Walker, M. C. Runge, et al.](#cite-moore2017TwostepAdaptiveManagement)
+(2017). "Two-Step Adaptive Management for Choosing between Two
+Management Actions". In: _Ecological Applications_ 27.4, pp. 1210-1222.
+ISSN: 1939-5582. DOI:
+[10.1002/eap.1515](https://doi.org/10.1002%2Feap.1515).
+
+&lt;a name=bib-morgan1990UncertaintyGuideDealing&gt;&lt;/a&gt;[Morgan, M. G, M.
+Henrion, and M. Small](#cite-morgan1990UncertaintyGuideDealing) (1990).
+_Uncertainty: A Guide to Dealing with Uncertainty in Quantitative Risk
+and Policy Analysis_. Cambridge university press.
+
+&lt;a name=bib-nichols1995ManagingNorthAmerican&gt;&lt;/a&gt;[Nichols, J. D, F. A.
+Johnson, and B. K. Williams](#cite-nichols1995ManagingNorthAmerican)
+(1995). "Managing North American Waterfowl in the Face of Uncertainty".
+In: _Annual Review of Ecology and Systematics_ 26, pp. 177-199. ISSN:
+0066-4162. DOI:
+[10.1146/annurev.es.26.110195.001141](https://doi.org/10.1146%2Fannurev.es.26.110195.001141).
+JSTOR: [2097204](https://www.jstor.org/stable/2097204).
+
+&lt;a name=bib-norton2002PragmatistEpistemologyAdaptive&gt;&lt;/a&gt;[Norton, B.
+G.](#cite-norton2002PragmatistEpistemologyAdaptive) (2002). "A
+Pragmatist Epistemology for Adaptive Management". In: _Pragmatist
+Ethics for a Technological Culture_. Ed. by J. Keulartz, M. Korthals,
+M. Schermer and T. Swierstra. Red. by M. Korthals and P. B. Thompson.
+Vol. 3. The International Library of Environmental, Agricultural and
+Food Ethics. Dordrecht: Springer Netherlands, pp. 171-190. ISBN:
+978-1-4020-1115-3 978-94-010-0301-8. DOI:
+[10.1007/978-94-010-0301-8_14](https://doi.org/10.1007%2F978-94-010-0301-8_14).
+
+&lt;a name=bib-ohagan2004DicingUnknown&gt;&lt;/a&gt;[O'Hagan,
+T.](#cite-ohagan2004DicingUnknown) (2004). "Dicing with the Unknown".
+In: _Significance_ 1.3, pp. 132-133. DOI:
+[10.1111/j.1740-9713.2004.00050.x](https://doi.org/10.1111%2Fj.1740-9713.2004.00050.x).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-peterson2008NonbayesianDecisionTheory&gt;&lt;/a&gt;[Peterson,
+M.](#cite-peterson2008NonbayesianDecisionTheory) (2008). _Nonbayesian
+Decision Theory_. Dordrecht: Springer Netherlands. ISBN:
+978-1-4020-8698-4 978-1-4020-8699-1. DOI:
+[10.1007/978-1-4020-8699-1](https://doi.org/10.1007%2F978-1-4020-8699-1).
+
+&lt;a name=bib-pettifor2000SpatiallyExplicitIndividualbased&gt;&lt;/a&gt;[Pettifor,
+R. A, R. W. G. Caldow, J. M. Rowcliffe, et
+al.](#cite-pettifor2000SpatiallyExplicitIndividualbased) (2000).
+"Spatially Explicit, Individual-Based, Behavioural Models of the Annual
+Cycle of Two Migratory Goose Populations". In: _Journal of Applied
+Ecology_ 37.s1, pp. 103-135. ISSN: 1365-2664. DOI:
+[10.1046/j.1365-2664.2000.00536.x](https://doi.org/10.1046%2Fj.1365-2664.2000.00536.x).
+
+&lt;a name=bib-puterman1994MarkovDecisionProcesses&gt;&lt;/a&gt;[Puterman, M. L,
+ed.](#cite-puterman1994MarkovDecisionProcesses) (1994). _Markov
+Decision Processes_. Wiley Series in Probability and Statistics.
+Hoboken, NJ, USA: John Wiley &amp; Sons, Inc.. ISBN: 978-0-470-31688-7
+978-0-471-61977-2. DOI:
+[10.1002/9780470316887](https://doi.org/10.1002%2F9780470316887).
+
+&lt;a name=bib-raiffa1970DecisionAnalysisIntroductory&gt;&lt;/a&gt;[Raiffa,
+H.](#cite-raiffa1970DecisionAnalysisIntroductory) (1970). _Decision
+Analysis: Introductory Lectures on Choices under Uncertainty_. 2.
+print. Behavioral Science Quantitative Methods. Reading, Mass.:
+Addison-Wesley. 309 pp. ISBN: 978-0-201-06290-8.
+
+&lt;a name=bib-rist2013AdaptiveManagementWhere&gt;&lt;/a&gt;[Rist, L, B. M.
+Campbell, and P. Frost](#cite-rist2013AdaptiveManagementWhere) (2013).
+"Adaptive Management: Where Are We Now?" In: _Environmental
+Conservation_ 40.1, pp. 5-18. ISSN: 0376-8929, 1469-4387. DOI:
+[10.1017/S0376892912000240](https://doi.org/10.1017%2FS0376892912000240).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-runge2011WhichUncertaintyUsing&gt;&lt;/a&gt;[Runge, M. C, S. J.
+Converse, and J. E. Lyons](#cite-runge2011WhichUncertaintyUsing)
+(2011). "Which Uncertainty? Using Expert Elicitation and Expected Value
+of Information to Design an Adaptive Program". In: _Biological
+Conservation_. Adaptive Management for Biodiversity Conservation in an
+Uncertain World 144.4, pp. 1214-1223. ISSN: 0006-3207. DOI:
+[10.1016/j.biocon.2010.12.020](https://doi.org/10.1016%2Fj.biocon.2010.12.020).
+
+&lt;a name=bib-schuwirth2019HowMakeEcological&gt;&lt;/a&gt;[Schuwirth, N, F.
+Borgwardt, S. Domisch, et al.](#cite-schuwirth2019HowMakeEcological)
+(2019). "How to Make Ecological Models Useful for Environmental
+Management". In: _Ecological Modelling_ 411, p. 108784. ISSN:
+0304-3800. DOI:
+[10.1016/j.ecolmodel.2019.108784](https://doi.org/10.1016%2Fj.ecolmodel.2019.108784).
+
+&lt;a name=bib-stillman2008MORPHIndividualbasedModel&gt;&lt;/a&gt;[Stillman, R.
+A.](#cite-stillman2008MORPHIndividualbasedModel) (2008). "MORPH—An
+Individual-Based Model to Predict the Effect of Environmental Change on
+Foraging Animal Populations". In: _Ecological Modelling_ 216.3, pp.
+265-276. ISSN: 0304-3800. DOI:
+[10.1016/j.ecolmodel.2008.04.014](https://doi.org/10.1016%2Fj.ecolmodel.2008.04.014).
+
+&lt;a name=bib-stroud2017KeyActionsSustainable&gt;&lt;/a&gt;[Stroud, D. A, J.
+Madsen, and A. D. Fox](#cite-stroud2017KeyActionsSustainable) (2017).
+"Key Actions towards the Sustainable Management of European Geese". In:
+_Ambio_ 46.S2, pp. 328-338. ISSN: 0044-7447, 1654-7209. DOI:
+[10.1007/s13280-017-0903-0](https://doi.org/10.1007%2Fs13280-017-0903-0).
+
+&lt;a name=bib-stuhr2003PragmatismValuesValuable&gt;&lt;/a&gt;[Stuhr, J.
+J.](#cite-stuhr2003PragmatismValuesValuable) (2003). "Pragmatism about
+Values and the Valuable: Commentary on 'A Pragmatic View on Values in
+Economics'". In: _Journal of Economic Methodology_ 10.2, pp. 213-221.
+ISSN: 1350-178X. DOI:
+[10.1080/1350178032000071084](https://doi.org/10.1080%2F1350178032000071084).
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-williams2011PassiveActiveAdaptive&gt;&lt;/a&gt;[Williams, B.
+K.](#cite-williams2011PassiveActiveAdaptive) (2011). "Passive and
+Active Adaptive Management: Approaches and an Example". In: _Journal of
+Environmental Management_. Adaptive Management for Natural Resources
+92.5, pp. 1371-1378. ISSN: 0301-4797. DOI:
+[10.1016/j.jenvman.2010.10.039](https://doi.org/10.1016%2Fj.jenvman.2010.10.039).
+
+&lt;a name=bib-williams2011AdaptiveResourceManagement&gt;&lt;/a&gt;[Williams, B. K,
+M. J. Eaton, and D. R.
+Breininger](#cite-williams2011AdaptiveResourceManagement) (2011).
+"Adaptive Resource Management and the Value of Information". In:
+_Ecological Modelling_ 222.18, pp. 3429-3436. ISSN: 0304-3800. DOI:
+[10.1016/j.ecolmodel.2011.07.003](https://doi.org/10.1016%2Fj.ecolmodel.2011.07.003).
+
+&lt;a name=bib-williams2015ValueInformationNatural&gt;&lt;/a&gt;[Williams, B. K.
+and F. A. Johnson](#cite-williams2015ValueInformationNatural) (2015).
+"Value of Information in Natural Resource Management: Technical
+Developments and Application to Pink-Footed Geese". In: _Ecology and
+Evolution_ 5.2, pp. 466-474. ISSN: 2045-7758. DOI:
+[10.1002/ece3.1363](https://doi.org/10.1002%2Fece3.1363).
+
+&lt;a name=bib-williams1996UncertaintyAdaptiveManagement&gt;&lt;/a&gt;[Williams, B.
+K, F. A. Johnson, and K.
+Wilkins](#cite-williams1996UncertaintyAdaptiveManagement) (1996).
+"Uncertainty and the Adaptive Management of Waterfowl Harvests". In:
+_The Journal of Wildlife Management_ 60.2, pp. 223-232. ISSN:
+0022-541X. DOI: [10.2307/3802220](https://doi.org/10.2307%2F3802220).
+JSTOR: [3802220](https://www.jstor.org/stable/3802220).
+
+&lt;a name=bib-williams2002AnalysisManagementAnimal&gt;&lt;/a&gt;[Williams, B. K,
+J. D. Nichols, and M. J.
+Conroy](#cite-williams2002AnalysisManagementAnimal) (2002). _Analysis
+and Management of Animal Populations: Modeling, Estimation, and
+Decision Making_. San Diego: Academic Press. 817 pp. ISBN:
+978-0-12-754406-9.
+---
+&lt;h1&gt;References&lt;/h1&gt;&lt;a name=bib-williams2018WhereGoGoose&gt;&lt;/a&gt;[Williams, J. H, C. J.
+Topping, L. Dalby, et al.](#cite-williams2018WhereGoGoose) (2018).
+"Where to Go Goose Hunting? Using Pattern-Oriented Modeling to Better
+Understand Human Decision Processes". In: _Human Dimensions of
+Wildlife_ 23.6, pp. 533-551. ISSN: 1087-1209. DOI:
+[10.1080/10871209.2018.1509249](https://doi.org/10.1080%2F10871209.2018.1509249).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
